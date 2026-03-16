@@ -17,6 +17,7 @@ const initSocket = (server) => {
             credentials: true,
         },
     });
+
     io.use(async (socket, next) => {
         try {
             const token = socket.handshake.auth?.token
@@ -105,6 +106,7 @@ const initSocket = (server) => {
                 socket.emit('error', { message: 'Failed to join order chat' });
             }
         });
+
         socket.on('send_message', async ({ room_type, room_id, message }) => {
             try {
                 if (!message?.trim()) return;
@@ -115,7 +117,6 @@ const initSocket = (server) => {
                 if (!socket.rooms.has(room)) {
                     return socket.emit('error', { message: 'You must join the room first' });
                 }
-
                 const { rows } = await db.query(
                     `INSERT INTO messages (room_type, room_id, sender_id, message)
                      VALUES ($1, $2, $3, $4)
