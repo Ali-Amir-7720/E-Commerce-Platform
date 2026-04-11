@@ -107,3 +107,36 @@ VALUES
 (1, 1, 'assigned'),
 (2, 2, 'assigned');
 
+
+
+INSERT INTO User_roles (Role_name) VALUES
+('Admin'),
+('Customer'),
+('Courier'),
+('Vendor');
+
+-- Admin
+INSERT INTO Users (Role_id, Full_name, Email, Password, Phone_number)
+VALUES
+(1, 'Ali Amir', 'ali.amir@admin.com', '$2b$10$6D47w04QDi97TM2lujvyUO6sXYxDlQ2Yz8KfIgEGy8csP/VyMLLa6', '03000000001');
+
+-- Customers
+INSERT INTO Users (Role_id, Full_name, Email, Password, Phone_number)
+VALUES
+(2, 'Bilal Hashmi', 'bilal.hashmi@gmail.com', '$2b$10$NdZhJ6oqSLWvb8gSayBM1.QHiqBDF5EK.IuBYPeOLT0h/yzL1Q0aK', '03000000002'),
+(2, 'Haseeb Ali', 'hasseb.ali.noor@gmail.com', '$2b$10$NdZhJ6oqSLWvb8gSayBM1.QHiqBDF5EK.IuBYPeOLT0h/yzL1Q0aK', '03000000003'),
+(2, 'Imran Khan', 'imran.khan@gmail.com', '$2b$10$NdZhJ6oqSLWvb8gSayBM1.QHiqBDF5EK.IuBYPeOLT0h/yzL1Q0aK', '03000000004');
+
+-- Vendors
+INSERT INTO Users (Role_id, Full_name, Email, Password, Phone_number)
+VALUES
+(4, 'Ahmed irfan', 'ahmed.irfan@vendor.com', '$2b$10$NdZhJ6oqSLWvb8gSayBM1.QHiqBDF5EK.IuBYPeOLT0h/yzL1Q0aK', '03000000005'),
+(4, 'Sania Shahid', 'sania.shahid@vendor.com', '$2b$10$NdZhJ6oqSLWvb8gSayBM1.QHiqBDF5EK.IuBYPeOLT0h/yzL1Q0aK', '03000000006'),
+(4, 'Taimur', 'taimur@vendor.com', '$2b$10$NdZhJ6oqSLWvb8gSayBM1.QHiqBDF5EK.IuBYPeOLT0h/yzL1Q0aK', '03000000007');
+
+-- Couriers
+INSERT INTO Users (Role_id, Full_name, Email, Password, Phone_number)
+VALUES
+(3, 'Arshad Iqbal', 'arshad.iqbal@delivery.com', '$2b$10$NdZhJ6oqSLWvb8gSayBM1.QHiqBDF5EK.IuBYPeOLT0h/yzL1Q0aK', '03000000008'),
+(3, 'Rashid Chaudhary', 'rashid.chaudhary@delivery.com', '$2b$10$NdZhJ6oqSLWvb8gSayBM1.QHiqBDF5EK.IuBYPeOLT0h/yzL1Q0aK', '03000000009'),
+(3, 'Kamran Khan', 'kamran.khan@delivery.com', '$2b$10$NdZhJ6oqSLWvb8gSayBM1.QHiqBDF5EK.IuBYPeOLT0h/yzL1Q0aK', '03000000010');

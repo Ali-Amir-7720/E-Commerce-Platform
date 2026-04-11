@@ -20,7 +20,7 @@ const addressRoutes = require('./routes/addressRoutes');
 const vendorRoutes = require('./routes/vendorRoutes');
 const reviewRoutes = require('./routes/reviewRoutes');
 const chatRoutes = require('./routes/chatRoutes');
-
+const analyticsRoutes = require('./routes/analyticsRoutes');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -59,6 +59,7 @@ app.use('/api/v1/address', addressRoutes);
 app.use('/api/v1/vendor', vendorRoutes);
 app.use('/api/v1/reviews', reviewRoutes);
 app.use('/api/v1/chat', chatRoutes);
+app.use('/api/v1/analytics', analyticsRoutes);
 
 app.get('/health', (_req, res) =>
     res.status(200).json({ status: 'OK', uptime: process.uptime() })
