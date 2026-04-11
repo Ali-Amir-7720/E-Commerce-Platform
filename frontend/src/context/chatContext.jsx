@@ -26,7 +26,7 @@ export const ChatProvider = ({ children }) => {
         // Avoid creating duplicate connections
         if (socketRef.current?.connected) return;
 
-        const socket = io('http://localhost:3000', {
+        const socket = io(import.meta.env.VITE_API_URL, {
             auth: { token },
             reconnection: true,
             reconnectionDelay: 1000,
