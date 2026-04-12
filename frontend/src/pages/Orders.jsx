@@ -221,7 +221,7 @@ const Orders = () => {
                                         <span className="text-xs text-white/20 font-mono capitalize">{order.payment_type}</span>
                                     </div>
                                     <div className="flex items-center gap-4 shrink-0">
-                                        <span className="text-base font-black text-white">${parseFloat(order.net_amount).toFixed(2)}</span>
+                                        <span className="text-base font-black text-white">PKR {parseFloat(order.net_amount).toFixed(2)}</span>
                                         {expanded[order.id] ? <ChevronUp className="w-4 h-4 text-white/25" /> : <ChevronDown className="w-4 h-4 text-white/25" />}
                                     </div>
                                 </button>
@@ -238,13 +238,13 @@ const Orders = () => {
                                                                 {item.variant_name}
                                                                 <span className="text-white/25 ml-2 font-mono">×{item.quantity}</span>
                                                             </span>
-                                                            <span className="font-semibold text-white/80">${parseFloat(item.total_amount).toFixed(2)}</span>
+                                                            <span className="font-semibold text-white/80">PKR {parseFloat(item.total_amount).toFixed(2)}</span>
                                                         </div>
                                                     ))}
                                                 </div>
                                                 <div className="flex justify-between pt-3 text-sm font-bold text-white/85 border-t border-white/8 mt-2">
                                                     <span>Total Paid</span>
-                                                    <span className="text-cyan-400">${parseFloat(order.net_amount).toFixed(2)}</span>
+                                                    <span className="text-cyan-400">PKR {parseFloat(order.net_amount).toFixed(2)}</span>
                                                 </div>
 
                                                 <div className="flex gap-2 mt-4 flex-wrap">
