@@ -94,7 +94,7 @@ const Cart = () => {
             const sub = items.reduce((s, i) => s + parseFloat(i.price || 0) * i.quantity, 0);
             const amt = discountType === 'rate' ? (sub * discountValue / 100) : discountValue;
             setDiscount(Math.min(amt, sub));
-            setCouponMsg(`✓ "${coupon}" applied — ${discountType === 'rate' ? discountValue + '%' : '$' + discountValue} off`);
+            setCouponMsg(`✓ "${coupon}" applied — ${discountType === 'rate' ? discountValue + '%' : 'PKR' + discountValue} off`);
             setCouponApplied(true);
         } catch {
             setDiscount(0);
@@ -193,18 +193,18 @@ const Cart = () => {
                             <h3 className="text-sm font-black text-white/50 uppercase tracking-widest mb-5">Order Summary</h3>
                             <div className="space-y-3 mb-5">
                                 <div className="flex justify-between text-sm text-white/40">
-                                    <span>Subtotal</span><span className="text-white/70">${subtotal.toFixed(2)}</span>
+                                    <span>Subtotal</span><span className="text-white/70">PKR {subtotal.toFixed(2)}</span>
                                 </div>
                                 <div className="flex justify-between text-sm text-white/40">
                                     <span>Shipping</span><span className="text-emerald-400 font-semibold">Free</span>
                                 </div>
                                 {discount > 0 && (
                                     <div className="flex justify-between text-sm text-white/40">
-                                        <span>Discount</span><span className="text-emerald-400 font-semibold">-${discount.toFixed(2)}</span>
+                                        <span>Discount</span><span className="text-emerald-400 font-semibold">-PKR {discount.toFixed(2)}</span>
                                     </div>
                                 )}
                                 <div className="border-t border-white/8 pt-3 flex justify-between font-black text-white text-lg">
-                                    <span>Total</span><span>${total.toFixed(2)}</span>
+                                    <span>Total</span><span>PKR {total.toFixed(2)}</span>
                                 </div>
                             </div>
 
