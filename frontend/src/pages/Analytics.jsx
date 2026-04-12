@@ -45,7 +45,7 @@ const StatusBadge = ({ status }) => {
 };
 
 // ── Simple Bar Chart ───────────────────────────────────────────────────────────
-const BarChart = ({ data, valueKey, labelKey, color = '#22d3ee', prefix = '$' }) => {
+const BarChart = ({ data, valueKey, labelKey, color = '#22d3ee', prefix = 'PKR' }) => {
     if (!data?.length) return <p className="text-white/20 text-sm py-4 text-center">No data yet</p>;
     const max = Math.max(...data.map(d => parseFloat(d[valueKey] || 0)));
     return (
