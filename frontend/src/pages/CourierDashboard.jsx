@@ -51,7 +51,7 @@ const AvailableCard = ({ order, onAccept }) => {
                         </p>
                         <p className="text-xs text-white/30 mt-1">Customer: {order.customer_name}</p>
                     </div>
-                    <p className="font-black text-cyan-400 text-sm shrink-0">${parseFloat(order.net_amount || 0).toFixed(2)}</p>
+                    <p className="font-black text-cyan-400 text-sm shrink-0">PKR {parseFloat(order.net_amount || 0).toFixed(2)}</p>
                 </div>
                 <button onClick={handleAccept} disabled={loading}
                     className="w-full py-2 text-xs font-bold rounded-xl transition-all disabled:opacity-60 active:scale-95"
@@ -107,7 +107,7 @@ const OrderCard = ({ order, onStatusChange }) => {
                             {order.full_address ? `${order.full_address}, ${order.city} ${order.zip_code}` : order.customer_name || 'No address'}
                         </p>
                     </div>
-                    <p className="font-black text-cyan-400 text-sm shrink-0">${parseFloat(order.net_amount || 0).toFixed(2)}</p>
+                    <p className="font-black text-cyan-400 text-sm shrink-0">PKR {parseFloat(order.net_amount || 0).toFixed(2)}</p>
                 </div>
 
                 {showFailReason && (
