@@ -94,7 +94,7 @@ const Cart = () => {
             const sub = items.reduce((s, i) => s + parseFloat(i.price || 0) * i.quantity, 0);
             const amt = discountType === 'rate' ? (sub * discountValue / 100) : discountValue;
             setDiscount(Math.min(amt, sub));
-            setCouponMsg(`✓ "${coupon}" applied — ${discountType === 'rate' ? discountValue + '%' : 'PKR' + discountValue} off`);
+            setCouponMsg(`✓ "${coupon}" applied — ${discountType === 'rate' ? discountValue + '%' : '$' + discountValue} off`);
             setCouponApplied(true);
         } catch {
             setDiscount(0);
@@ -106,7 +106,7 @@ const Cart = () => {
     const handlePlaceOrder = async () => {
         setPlacing(true);
         try {
-            const orderRes = await placeOrder({ payment_type: paymentType, discount_amount: discount, shipping_amount: 0, address_id: selectedAddress });
+            const orderRes = await placeOrder({ payment_type: paymentType, coupon_code: couponApplied ? coupon : null, shipping_amount: 0, address_id: selectedAddress });
             const flagged = orderRes?.data?.flagged;
             toast.success(flagged
                 ? '⚠️ Order placed but flagged for review. Our team will verify it shortly.'
@@ -162,7 +162,7 @@ const Cart = () => {
                                     <div className="flex-grow min-w-0">
                                         <p className="font-semibold text-white/85 truncate text-sm">{item.product_name}</p>
                                         <p className="text-xs text-white/35 mt-0.5">{item.variant_name}</p>
-                                        <p className="text-cyan-400 font-black mt-0.5">PKR {parseFloat(item.price || 0).toFixed(2)}</p>
+                                        <p className="text-cyan-400 font-black mt-0.5">${parseFloat(item.price || 0).toFixed(2)}</p>
                                     </div>
                                     <div className="flex items-center rounded-xl overflow-hidden" style={{ border: '1px solid rgba(255,255,255,0.1)' }}>
                                         <button onClick={() => handleQtyChange(item, -1)}
@@ -176,7 +176,7 @@ const Cart = () => {
                                         </button>
                                     </div>
                                     <p className="font-black text-white w-20 text-right text-sm">
-                                        PKR {(parseFloat(item.price || 0) * item.quantity).toFixed(2)}
+                                        ${(parseFloat(item.price || 0) * item.quantity).toFixed(2)}
                                     </p>
                                     <button onClick={() => handleRemove(itemId)}
                                         className="p-2 text-white/20 hover:text-red-400 hover:bg-red-500/10 rounded-xl transition-colors ml-1">
@@ -193,18 +193,18 @@ const Cart = () => {
                             <h3 className="text-sm font-black text-white/50 uppercase tracking-widest mb-5">Order Summary</h3>
                             <div className="space-y-3 mb-5">
                                 <div className="flex justify-between text-sm text-white/40">
-                                    <span>Subtotal</span><span className="text-white/70">PKR {subtotal.toFixed(2)}</span>
+                                    <span>Subtotal</span><span className="text-white/70">${subtotal.toFixed(2)}</span>
                                 </div>
                                 <div className="flex justify-between text-sm text-white/40">
                                     <span>Shipping</span><span className="text-emerald-400 font-semibold">Free</span>
                                 </div>
                                 {discount > 0 && (
                                     <div className="flex justify-between text-sm text-white/40">
-                                        <span>Discount</span><span className="text-emerald-400 font-semibold">-PKR {discount.toFixed(2)}</span>
+                                        <span>Discount</span><span className="text-emerald-400 font-semibold">-${discount.toFixed(2)}</span>
                                     </div>
                                 )}
                                 <div className="border-t border-white/8 pt-3 flex justify-between font-black text-white text-lg">
-                                    <span>Total</span><span>PKR {total.toFixed(2)}</span>
+                                    <span>Total</span><span>${total.toFixed(2)}</span>
                                 </div>
                             </div>
 
