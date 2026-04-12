@@ -3,6 +3,7 @@ const { placeOrder } = require('../services/orderService');
 
 const createOrder = async (req, res) => {
     const { payment_type, shipping_amount, coupon_code } = req.body;
+    console.log("COUPON RECEIVED:", coupon_code);
 
     if (!payment_type) {
         return res.status(400).json({ error: 'payment_type is required' });
