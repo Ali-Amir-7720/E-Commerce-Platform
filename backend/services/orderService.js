@@ -87,7 +87,7 @@ const placeOrder = async ({ userId, paymentType, shippingAmount = 0, couponCode 
 
             if (discount_type === 'fixed') {
                 discountAmount = discountValue;
-            } else if (discount_type === 'percent') {
+            } else if (discount_type === 'rate') {
                 discountAmount = (totalAmount * discountValue) / 100;
             }
 
