@@ -56,13 +56,13 @@ const placeOrder = async ({ userId, paymentType, shippingAmount = 0, couponCode 
                 });
             }
 
-            const lineTotal = parseFloat(item.price) * item.quantity;
+            const lineTotal = Number(item.price) * item.quantity;
             totalAmount += lineTotal;
 
             orderItems.push({ ...item, lineTotal });
         }
 
-        // 3. Coupon logic (FIXED)
+        // 3. Coupon logic (FULL FIXED)
         let discountAmount = 0;
 
         const code = couponCode?.trim();
@@ -73,28 +73,30 @@ const placeOrder = async ({ userId, paymentType, shippingAmount = 0, couponCode 
                  FROM Offers
                  WHERE LOWER(coupon_code) = LOWER($1)
                    AND status = 'active'
-                   AND start_date <= CURRENT_DATE
-                   AND end_date >= CURRENT_DATE`,
+                   AND CURRENT_TIMESTAMP BETWEEN start_date AND end_date`,
                 [code]
             );
 
             if (offerResult.rows.length === 0) {
-                throw httpError(400, 'Coupon code is invalid or has expired');
+                throw httpError(400, 'Coupon code is invalid or expired');
             }
 
             const { discount_type, discount_value } = offerResult.rows[0];
 
-            discountAmount =
-                discount_type === 'fixed'
-                    ? parseFloat(discount_value)
-                    : (totalAmount * parseFloat(discount_value)) / 100;
+            const discountValue = Number(discount_value);
+
+            if (discount_type === 'fixed') {
+                discountAmount = discountValue;
+            } else if (discount_type === 'percent') {
+                discountAmount = (totalAmount * discountValue) / 100;
+            }
 
             if (discountAmount > totalAmount) {
                 discountAmount = totalAmount;
             }
         }
 
-        // 4. Final amount
+        // 4. Final calculation
         const netAmount = totalAmount - discountAmount + shippingAmt;
 
         if (netAmount < 0) {
