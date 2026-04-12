@@ -136,7 +136,7 @@ const AdminAnalytics = () => {
     return (
         <>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                <StatCard icon={DollarSign} label="Total Revenue" value={`$${parseFloat(o.total_revenue || 0).toLocaleString('en-US', { maximumFractionDigits: 0 })}`} color="#22d3ee" />
+                <StatCard icon={DollarSign} label="Total Revenue" value={`PKR ${parseFloat(o.total_revenue || 0).toLocaleString('en-US', { maximumFractionDigits: 0 })}`} color="#22d3ee" />
                 <StatCard icon={ShoppingBag} label="Total Orders" value={fmtInt(o.total_orders)} color="#a78bfa" />
                 <StatCard icon={Users} label="Total Users" value={fmtInt(o.total_users)} color="#34d399" sub={`+${data.new_users_today} today`} />
                 <StatCard icon={Package} label="Active Products" value={fmtInt(o.total_products)} color="#f59e0b" />
@@ -167,7 +167,7 @@ const AdminAnalytics = () => {
                             <tr key={i} className="hover:bg-white/[0.02]" style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
                                 <td className="px-5 py-3 font-semibold text-white/80 text-sm">{p.product_name}</td>
                                 <td className="px-5 py-3 text-cyan-400 font-bold">{p.total_sold}</td>
-                                <td className="px-5 py-3 text-emerald-400 font-bold">${parseFloat(p.total_revenue).toLocaleString()}</td>
+                                <td className="px-5 py-3 text-emerald-400 font-bold">PKR {parseFloat(p.total_revenue).toLocaleString()}</td>
                             </tr>
                         ))}
                     </tbody>
@@ -190,7 +190,7 @@ const AdminAnalytics = () => {
                                     <p className="text-xs text-white/30">{c.email}</p>
                                 </td>
                                 <td className="px-5 py-3 text-white/60">{c.total_orders}</td>
-                                <td className="px-5 py-3 text-emerald-400 font-bold">${parseFloat(c.total_spent).toLocaleString()}</td>
+                                <td className="px-5 py-3 text-emerald-400 font-bold">PKR {parseFloat(c.total_spent).toLocaleString()}</td>
                             </tr>
                         ))}
                     </tbody>
@@ -219,7 +219,7 @@ const VendorAnalytics = () => {
     return (
         <>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <StatCard icon={DollarSign} label="Total Revenue" value={`$${parseFloat(o.total_revenue || 0).toLocaleString('en-US', { maximumFractionDigits: 0 })}`} color="#22d3ee" />
+                <StatCard icon={DollarSign} label="Total Revenue" value={`PKR ${parseFloat(o.total_revenue || 0).toLocaleString('en-US', { maximumFractionDigits: 0 })}`} color="#22d3ee" />
                 <StatCard icon={ShoppingBag} label="Orders" value={fmtInt(o.total_orders)} color="#a78bfa" />
                 <StatCard icon={Package} label="Units Sold" value={fmtInt(o.total_units_sold)} color="#34d399" />
                 <StatCard icon={BarChart2} label="Products" value={fmtInt(o.total_products)} color="#f59e0b" />
@@ -251,7 +251,7 @@ const VendorAnalytics = () => {
                                     <p className="text-xs text-white/35">{v.variant_name}</p>
                                 </td>
                                 <td className="px-5 py-3 text-cyan-400 font-bold">{v.total_sold}</td>
-                                <td className="px-5 py-3 text-emerald-400 font-bold">${parseFloat(v.total_revenue).toLocaleString()}</td>
+                                <td className="px-5 py-3 text-emerald-400 font-bold">PKR {parseFloat(v.total_revenue).toLocaleString()}</td>
                             </tr>
                         ))}
                     </tbody>
@@ -281,8 +281,8 @@ const CustomerAnalytics = () => {
         <>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <StatCard icon={ShoppingBag} label="Total Orders" value={fmtInt(o.total_orders)} color="#22d3ee" />
-                <StatCard icon={DollarSign} label="Total Spent" value={`$${parseFloat(o.total_spent || 0).toLocaleString('en-US', { maximumFractionDigits: 0 })}`} color="#a78bfa" />
-                <StatCard icon={TrendingUp} label="Avg Order Value" value={`$${fmt(o.avg_order_value)}`} color="#f59e0b" />
+                <StatCard icon={DollarSign} label="Total Spent" value={`PKR ${parseFloat(o.total_spent || 0).toLocaleString('en-US', { maximumFractionDigits: 0 })}`} color="#a78bfa" />
+                <StatCard icon={TrendingUp} label="Avg Order Value" value={`PKR ${fmt(o.avg_order_value)}`} color="#f59e0b" />
                 <StatCard icon={CheckCircle2} label="Delivered" value={fmtInt(o.delivered_orders)} color="#34d399" />
             </div>
 
@@ -308,7 +308,7 @@ const CustomerAnalytics = () => {
                         {data.recent_orders.map((o, i) => (
                             <tr key={i} className="hover:bg-white/[0.02]" style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
                                 <td className="px-5 py-3 font-mono text-cyan-400 text-xs">{o.order_number}</td>
-                                <td className="px-5 py-3 font-bold text-white/80">${fmt(o.net_amount)}</td>
+                                <td className="px-5 py-3 font-bold text-white/80">PKR {fmt(o.net_amount)}</td>
                                 <td className="px-5 py-3"><StatusBadge status={o.status} /></td>
                                 <td className="px-5 py-3 text-white/30 text-xs">{new Date(o.created_at).toLocaleDateString()}</td>
                             </tr>
@@ -364,7 +364,7 @@ const CourierAnalytics = () => {
                         {data.recent_deliveries.map((d, i) => (
                             <tr key={i} className="hover:bg-white/[0.02]" style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
                                 <td className="px-5 py-3 font-mono text-cyan-400 text-xs">{d.order_number}</td>
-                                <td className="px-5 py-3 font-bold text-white/80">${fmt(d.net_amount)}</td>
+                                <td className="px-5 py-3 font-bold text-white/80">PKR {fmt(d.net_amount)}</td>
                                 <td className="px-5 py-3"><StatusBadge status={d.status} /></td>
                                 <td className="px-5 py-3 text-white/30 text-xs">{new Date(d.assigned_at).toLocaleDateString()}</td>
                             </tr>
