@@ -57,11 +57,19 @@ const getOrders = async (req, res) => {
     try {
         if (role_name === 'Admin') {
             const { rows } = await db.query(
-                `SELECT o.id, o.order_number, o.net_amount, o.status,
-                        o.payment_status, o.created_at, u.email AS user_email
-                 FROM Orders o
-                 JOIN Users u ON o.user_id = u.id
-                 ORDER BY o.created_at DESC`
+                `SELECT o.id,
+                o.order_number,
+                o.total_amount,
+                o.discount_amount,
+                o.shipping_amount,
+                o.net_amount,
+                o.status,
+                o.payment_status,
+                o.created_at,
+                u.email AS user_email
+         FROM Orders o
+         JOIN Users u ON o.user_id = u.id
+         ORDER BY o.created_at DESC`
             );
             return res.status(200).json(rows);
         }
