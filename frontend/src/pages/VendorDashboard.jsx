@@ -378,7 +378,7 @@ const EditProductModal = ({ product, categories, onSave, onClose, toast }) => {
                                                 <p className="text-sm font-semibold text-white/80">{v.variant_name || `Variant #${v.id}`}</p>
                                                 <div className="flex items-center gap-3 mt-0.5 flex-wrap">
                                                     <span className="text-xs font-mono text-white/25">{v.sku || 'No SKU'}</span>
-                                                    <span className="text-xs font-black text-cyan-400">${parseFloat(v.price).toFixed(2)}</span>
+                                                    <span className="text-xs font-black text-cyan-400">PKR {parseFloat(v.price).toFixed(2)}</span>
                                                     <span className="text-xs text-white/25">{v.stock_quantity} in stock</span>
                                                 </div>
                                             </div>
@@ -487,7 +487,7 @@ const ProductRow = ({ product, categories, onEdit, onDelete, toast }) => {
                                             <div key={v.id} className="px-3 py-2 bg-white/[0.04] border border-white/8 rounded-xl">
                                                 <p className="text-xs font-semibold text-white/70">{v.variant_name || `Variant #${v.id}`}</p>
                                                 <div className="flex items-center gap-2 mt-0.5">
-                                                    <span className="text-xs font-black text-cyan-400">${parseFloat(v.price).toFixed(2)}</span>
+                                                    <span className="text-xs font-black text-cyan-400">PKR {parseFloat(v.price).toFixed(2)}</span>
                                                     <span className="text-white/10">·</span>
                                                     <span className="text-xs text-white/30">{v.stock_quantity} in stock</span>
                                                 </div>

@@ -17,7 +17,7 @@ const CartItem = ({ item, onRemove }) => {
 
             {/* Price & qty */}
             <div className="text-right shrink-0">
-                <p className="font-bold text-cyan-400 text-sm">${parseFloat(item.price).toFixed(2)}</p>
+                <p className="font-bold text-cyan-400 text-sm">PKR{parseFloat(item.price).toFixed(2)}</p>
                 <p className="text-xs text-white/30 mt-0.5">×{item.quantity}</p>
             </div>
 

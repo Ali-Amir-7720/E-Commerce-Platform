@@ -199,7 +199,7 @@ const ProductDetails = () => {
                                 {selectedVariant && (
                                     <div className="mt-4 p-4 rounded-xl flex items-center gap-4"
                                         style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}>
-                                        <span className="text-2xl font-extrabold text-white">${parseFloat(selectedVariant.price).toFixed(2)}</span>
+                                        <span className="text-2xl font-extrabold text-white">PKR {parseFloat(selectedVariant.price).toFixed(2)}</span>
                                         <span className={`flex items-center gap-1.5 text-sm px-3 py-1 rounded-full font-semibold ${selectedVariant.stock_quantity > 0
                                             ? 'bg-emerald-500/10 text-emerald-400' : 'bg-red-500/10 text-red-400'}`}>
                                             {selectedVariant.stock_quantity > 0

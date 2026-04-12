@@ -65,7 +65,7 @@ const Wishlist = () => {
                             <div className="p-4">
                                 <p className="font-bold text-white/85 leading-tight truncate">{item.product_name}</p>
                                 <p className="text-xs text-white/35 mt-0.5">{item.variant_name}</p>
-                                <p className="text-cyan-400 font-black text-lg mt-2">${parseFloat(item.price || 0).toFixed(2)}</p>
+                                <p className="text-cyan-400 font-black text-lg mt-2">PKR {parseFloat(item.price || 0).toFixed(2)}</p>
                                 <div className="flex gap-2 mt-3">
                                     <Link to={`/products/${item.product_id}`}
                                         className="flex-grow flex items-center justify-center gap-1.5 py-2 text-sm font-bold rounded-xl text-black transition-all"

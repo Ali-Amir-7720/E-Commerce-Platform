@@ -68,7 +68,7 @@ const ProductCard = ({ product }) => {
 
                 <div className="mt-auto">
                     {price && (
-                        <p className="text-lg font-black text-white mb-3">${parseFloat(price).toFixed(2)}</p>
+                        <p className="text-lg font-black text-white mb-3">PKR {parseFloat(price).toFixed(2)}</p>
                     )}
                     <div className="flex gap-2">
                         <button onClick={handleAddToCart}
