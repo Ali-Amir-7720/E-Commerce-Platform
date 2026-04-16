@@ -84,10 +84,10 @@ const login = async (req, res) => {
         const user = rows[0];
 
         if (user.status === 'blocked') {
-            return res.status(403).json({ error: 'Your account has been blocked. Contact support.' });
+            return res.status(403).json({ error: 'Your account has been blocked. Contact support : nexus@admin.com' });
         }
         if (user.status === 'inactive') {
-            return res.status(403).json({ error: 'Your account is inactive. Contact support.' });
+            return res.status(403).json({ error: 'Your account is inactive. Contact support : nexus@admin.com' });
         }
 
         const isMatch = await comparePassword(password, user.password);
