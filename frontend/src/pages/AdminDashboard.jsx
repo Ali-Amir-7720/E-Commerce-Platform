@@ -119,6 +119,19 @@ const AdminDashboard = () => {
 
     const handleCreateOffer = async (e) => {
         e.preventDefault();
+        const today = new Date().toISOString().split('T')[0];
+        if (offerForm.start_date < today) {
+            toast.error('Start date cannot be in the past.');
+            return;
+        }
+        if (offerForm.end_date < today) {
+            toast.error('End date cannot be in the past.');
+            return;
+        }
+        if (offerForm.end_date < offerForm.start_date) {
+            toast.error('End date cannot be before start date.');
+            return;
+        }
         try { await manageOffers.create(offerForm); toast.success('Offer created!'); setShowOfferModal(false); setOfferForm({ coupon_code: '', discount_type: 'rate', discount_value: '', start_date: '', end_date: '' }); fetchTab('offers'); }
         catch (e) { toast.error(e.response?.data?.error || 'Failed to create.'); }
     };
@@ -373,7 +386,7 @@ const AdminDashboard = () => {
                                                 <p className="text-white/55 text-sm mb-2">{f.detail}</p>
                                                 <div className="flex gap-2 flex-wrap">
                                                     <span className="px-2.5 py-1 rounded-lg text-xs font-mono text-cyan-400" style={{ background: 'rgba(34,211,238,0.08)' }}>{f.order_number}</span>
-                                                    <span className="px-2.5 py-1 rounded-lg text-xs font-bold" style={{ background: 'rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.5)' }}>PKR {parseFloat(f.net_amount).toFixed(2)}</span>
+                                                    <span className="px-2.5 py-1 rounded-lg text-xs font-bold" style={{ background: 'rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.5)' }}>${parseFloat(f.net_amount).toFixed(2)}</span>
                                                     <span className="px-2.5 py-1 rounded-lg text-xs" style={{ background: 'rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.4)' }}>{f.full_name} — {f.email}</span>
                                                 </div>
                                                 {f.flag_status !== 'pending' && f.reviewed_by_name && (
@@ -462,13 +475,15 @@ const AdminDashboard = () => {
                         <select className={inputCls} style={inputStyle} value={offerForm.discount_type}
                             onChange={e => setOfferForm(f => ({ ...f, discount_type: e.target.value }))}>
                             <option value="rate" className="bg-[#141a24]">Percentage (%)</option>
-                            <option value="fixed" className="bg-[#141a24]">Fixed (PKR )</option>
+                            <option value="fixed" className="bg-[#141a24]">Fixed ($)</option>
                         </select>
                         <input className={inputCls} style={inputStyle} placeholder="Discount value" type="number" value={offerForm.discount_value}
                             onChange={e => setOfferForm(f => ({ ...f, discount_value: e.target.value }))} required />
                         <input className={inputCls} style={inputStyle} type="date" value={offerForm.start_date}
+                            min={new Date().toISOString().split('T')[0]}
                             onChange={e => setOfferForm(f => ({ ...f, start_date: e.target.value }))} required />
                         <input className={inputCls} style={inputStyle} type="date" value={offerForm.end_date}
+                            min={offerForm.start_date || new Date().toISOString().split('T')[0]}
                             onChange={e => setOfferForm(f => ({ ...f, end_date: e.target.value }))} required />
                         <button type="submit" className="w-full py-2.5 rounded-xl font-bold text-black" style={{ background: '#22d3ee' }}>Create Offer</button>
                     </form>
