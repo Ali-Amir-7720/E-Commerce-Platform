@@ -2,7 +2,7 @@
 const ORDER_FLOOD_LIMIT = 3;
 const ORDER_FLOOD_WINDOW = '10 minutes';
 const HIGH_VALUE_THRESHOLD = 5000;
-const DAILY_SPEND_LIMIT = 10000;
+const DAILY_SPEND_LIMIT = 100000;
 const FAILED_DELIVERY_LIMIT = 2;
 
 const checkFraud = async (client, userId, orderId, netAmount) => {
@@ -27,7 +27,7 @@ const checkFraud = async (client, userId, orderId, netAmount) => {
     if (parseFloat(netAmount) > HIGH_VALUE_THRESHOLD) {
         flags.push({
             rule: 'HIGH_VALUE_ORDER',
-            detail: `Order value $${parseFloat(netAmount).toFixed(2)} exceeds threshold of $${HIGH_VALUE_THRESHOLD}`
+            detail: `Order value PKR${parseFloat(netAmount).toFixed(2)} exceeds threshold of PKR${HIGH_VALUE_THRESHOLD}`
         });
     }
 
@@ -44,7 +44,7 @@ const checkFraud = async (client, userId, orderId, netAmount) => {
     if (todayTotal > DAILY_SPEND_LIMIT) {
         flags.push({
             rule: 'DAILY_SPEND_LIMIT',
-            detail: `Total spend today $${todayTotal.toFixed(2)} exceeds daily limit of $${DAILY_SPEND_LIMIT}`
+            detail: `Total spend today PKR${todayTotal.toFixed(2)} exceeds daily limit of PKR${DAILY_SPEND_LIMIT}`
         });
     }
     const { rows: failedOrders } = await client.query(
