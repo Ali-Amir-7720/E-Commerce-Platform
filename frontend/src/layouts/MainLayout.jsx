@@ -11,7 +11,7 @@ const MainLayout = () => {
             </main>
             <footer className="border-t border-white/8 py-6 mt-auto" style={{ background: '#0e1117' }}>
                 <div className="max-w-7xl mx-auto px-4 text-center text-sm text-white/30">
-                    &copy; {new Date().getFullYear()} Nexus E-Commerce. All rights reserved.
+                    &copy; {new Date().getFullYear()} Nexus E-Commerce. All rights reserved.For Support Contact : nexus@admin.com
                 </div>
             </footer>
         </div>
