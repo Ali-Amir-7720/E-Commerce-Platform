@@ -302,7 +302,7 @@ const AdminDashboard = () => {
                                             <tr key={o.id} className="hover:bg-white/[0.02] transition-colors" style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
                                                 <td className={`${tdCls} font-mono font-bold text-cyan-400`}>{o.coupon_code}</td>
                                                 <td className={`${tdCls} text-white/50`}>{o.discount_type}</td>
-                                                <td className={`${tdCls} text-white/70 font-bold`}>{o.discount_type === 'rate' ? `${o.discount_value}%` : `$${o.discount_value}`}</td>
+                                                <td className={`${tdCls} text-white/70 font-bold`}>{o.discount_type === 'rate' ? `${o.discount_value}%` : `${o.discount_value}`}</td>
                                                 <td className={`${tdCls} text-white/40 text-xs`}>{o.start_date?.slice(0, 10)}</td>
                                                 <td className={`${tdCls} text-white/40 text-xs`}>{o.end_date?.slice(0, 10)}</td>
                                                 <td className={tdCls}><Badge color={o.status === 'active' ? 'green' : 'red'}>{o.status}</Badge></td>
@@ -386,7 +386,7 @@ const AdminDashboard = () => {
                                                 <p className="text-white/55 text-sm mb-2">{f.detail}</p>
                                                 <div className="flex gap-2 flex-wrap">
                                                     <span className="px-2.5 py-1 rounded-lg text-xs font-mono text-cyan-400" style={{ background: 'rgba(34,211,238,0.08)' }}>{f.order_number}</span>
-                                                    <span className="px-2.5 py-1 rounded-lg text-xs font-bold" style={{ background: 'rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.5)' }}>${parseFloat(f.net_amount).toFixed(2)}</span>
+                                                    <span className="px-2.5 py-1 rounded-lg text-xs font-bold" style={{ background: 'rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.5)' }}>PKR {parseFloat(f.net_amount).toFixed(2)}</span>
                                                     <span className="px-2.5 py-1 rounded-lg text-xs" style={{ background: 'rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.4)' }}>{f.full_name} — {f.email}</span>
                                                 </div>
                                                 {f.flag_status !== 'pending' && f.reviewed_by_name && (
@@ -431,7 +431,7 @@ const AdminDashboard = () => {
                                             <tr key={o.id} className="hover:bg-white/[0.02] transition-colors" style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
                                                 <td className={`${tdCls} font-mono font-bold text-cyan-400 text-xs`}>{o.order_number}</td>
                                                 <td className={`${tdCls} text-white/60 text-xs`}>{o.user_email}</td>
-                                                <td className={`${tdCls} font-bold text-white/85`}>${parseFloat(o.net_amount).toFixed(2)}</td>
+                                                <td className={`${tdCls} font-bold text-white/85`}>PKR {parseFloat(o.net_amount).toFixed(2)}</td>
                                                 <td className={`${tdCls} text-white/40 capitalize text-xs`}>{o.payment_status}</td>
                                                 <td className={tdCls}>
                                                     <Badge color={
@@ -475,7 +475,7 @@ const AdminDashboard = () => {
                         <select className={inputCls} style={inputStyle} value={offerForm.discount_type}
                             onChange={e => setOfferForm(f => ({ ...f, discount_type: e.target.value }))}>
                             <option value="rate" className="bg-[#141a24]">Percentage (%)</option>
-                            <option value="fixed" className="bg-[#141a24]">Fixed ($)</option>
+                            <option value="fixed" className="bg-[#141a24]">Fixed (PKR)</option>
                         </select>
                         <input className={inputCls} style={inputStyle} placeholder="Discount value" type="number" value={offerForm.discount_value}
                             onChange={e => setOfferForm(f => ({ ...f, discount_value: e.target.value }))} required />
