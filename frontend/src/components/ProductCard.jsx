@@ -71,11 +71,13 @@ const ProductCard = ({ product }) => {
                         <p className="text-lg font-black text-white mb-3">PKR {parseFloat(price).toFixed(2)}</p>
                     )}
                     <div className="flex gap-2">
-                        <button onClick={handleAddToCart}
+                        <Link
+                            to={`/products/${product.id}`}
                             className="flex-grow flex items-center justify-center gap-1.5 py-2 px-3 text-black text-sm font-bold rounded-xl active:scale-95 transition-all"
-                            style={{ background: '#22d3ee' }}>
-                            <ShoppingCart className="w-4 h-4" /> Add to Cart
-                        </button>
+                            style={{ background: '#22d3ee' }}
+                        >
+                            <ShoppingCart className="w-4 h-4" /> View Product
+                        </Link>
                         <button onClick={handleAddToWishlist}
                             className="p-2 rounded-xl text-white/30 hover:text-red-400 active:scale-95 transition-all"
                             style={{ border: '1px solid rgba(255,255,255,0.1)' }}
