@@ -62,14 +62,15 @@ const placeOrder = async ({ userId, paymentType, shippingAmount = 0, couponCode 
             orderItems.push({ ...item, lineTotal });
         }
 
-        // 3. Coupon logic (FULL FIXED)
+        // 3. Coupon logic (UPDATED WITH USAGE CHECK)
         let discountAmount = 0;
+        let offerId = null;
 
         const code = couponCode?.trim();
 
         if (code) {
             const offerResult = await client.query(
-                `SELECT discount_type, discount_value
+                `SELECT id, discount_type, discount_value
                  FROM Offers
                  WHERE LOWER(coupon_code) = LOWER($1)
                    AND status = 'active'
@@ -81,13 +82,25 @@ const placeOrder = async ({ userId, paymentType, shippingAmount = 0, couponCode 
                 throw httpError(400, 'Coupon code is invalid or expired');
             }
 
-            const { discount_type, discount_value } = offerResult.rows[0];
+            const offer = offerResult.rows[0];
+            offerId = offer.id;
 
-            const discountValue = Number(discount_value);
+            // CHECK IF ALREADY USED
+            const usageCheck = await client.query(
+                `SELECT 1 FROM CouponUsage
+                 WHERE user_id = $1 AND offer_id = $2`,
+                [userId, offerId]
+            );
 
-            if (discount_type === 'fixed') {
+            if (usageCheck.rows.length > 0) {
+                throw httpError(400, 'You have already used this coupon');
+            }
+
+            const discountValue = Number(offer.discount_value);
+
+            if (offer.discount_type === 'fixed') {
                 discountAmount = discountValue;
-            } else if (discount_type === 'rate') {
+            } else if (offer.discount_type === 'rate') {
                 discountAmount = (totalAmount * discountValue) / 100;
             }
 
@@ -109,8 +122,8 @@ const placeOrder = async ({ userId, paymentType, shippingAmount = 0, couponCode 
         const orderResult = await client.query(
             `INSERT INTO Orders
                (user_id, order_number, total_amount, discount_amount,
-                shipping_amount, net_amount, payment_type)
-             VALUES ($1, $2, $3, $4, $5, $6, $7)
+                shipping_amount, net_amount, payment_type, offer_id)
+             VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
              RETURNING id`,
             [
                 userId,
@@ -120,6 +133,7 @@ const placeOrder = async ({ userId, paymentType, shippingAmount = 0, couponCode 
                 shippingAmt.toFixed(2),
                 netAmount.toFixed(2),
                 paymentType,
+                offerId
             ]
         );
 
@@ -142,13 +156,22 @@ const placeOrder = async ({ userId, paymentType, shippingAmount = 0, couponCode 
             );
         }
 
-        // 7. Clear cart
+        // 7. Record coupon usage (NEW)
+        if (offerId) {
+            await client.query(
+                `INSERT INTO CouponUsage (user_id, offer_id, order_id)
+                 VALUES ($1, $2, $3)`,
+                [userId, offerId, orderId]
+            );
+        }
+
+        // 8. Clear cart
         await client.query(
             `DELETE FROM Cart_items WHERE cart_id = $1`,
             [cartId]
         );
 
-        // 8. Fraud check
+        // 9. Fraud check
         const wasFlagged = await checkFraud(client, userId, orderId, netAmount);
 
         await client.query('COMMIT');
