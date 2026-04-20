@@ -62,7 +62,7 @@ const placeOrder = async ({ userId, paymentType, shippingAmount = 0, couponCode 
             orderItems.push({ ...item, lineTotal });
         }
 
-        // 3. Coupon logic (UPDATED WITH USAGE CHECK)
+        // 3. Coupon logic (SAFE VERSION)
         let discountAmount = 0;
         let offerId = null;
 
@@ -85,7 +85,7 @@ const placeOrder = async ({ userId, paymentType, shippingAmount = 0, couponCode 
             const offer = offerResult.rows[0];
             offerId = offer.id;
 
-            // CHECK IF ALREADY USED
+            // CHECK IF ALREADY USED (SAFE GUARD)
             const usageCheck = await client.query(
                 `SELECT 1 FROM CouponUsage
                  WHERE user_id = $1 AND offer_id = $2`,
@@ -156,7 +156,7 @@ const placeOrder = async ({ userId, paymentType, shippingAmount = 0, couponCode 
             );
         }
 
-        // 7. Record coupon usage (NEW)
+        // 7. Record coupon usage (ONLY IF USED)
         if (offerId) {
             await client.query(
                 `INSERT INTO CouponUsage (user_id, offer_id, order_id)
@@ -188,7 +188,10 @@ const placeOrder = async ({ userId, paymentType, shippingAmount = 0, couponCode 
 
     } catch (err) {
         await client.query('ROLLBACK');
-        console.log('[ORDER ERROR]', err.message);
+
+        // IMPORTANT DEBUG FIX
+        console.log('[ORDER ERROR FULL]', err);
+
         throw err;
     } finally {
         client.release();
