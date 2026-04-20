@@ -276,7 +276,7 @@ const Cart = () => {
                             <div className="mb-5">
                                 <p className="text-xs font-bold text-white/30 uppercase tracking-widest mb-3">Payment Method</p>
                                 <div className="grid grid-cols-3 gap-2">
-                                    {['cod', 'upi', 'netbanking'].map(m => (
+                                    {['cod'].map(m => (
                                         <button key={m} onClick={() => setPaymentType(m)}
                                             className="py-2 rounded-xl text-xs font-bold transition-all"
                                             style={paymentType === m
