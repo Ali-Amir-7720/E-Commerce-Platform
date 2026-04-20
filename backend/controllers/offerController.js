@@ -53,12 +53,14 @@ const getOffers = async (req, res) => {
 
 const validateCoupon = async (req, res) => {
     const { coupon_code } = req.body;
+    const userId = req.user?.id; // assuming auth middleware
 
     if (!coupon_code) {
         return res.status(400).json({ error: 'coupon_code is required' });
     }
 
     try {
+        // Step 1: Get coupon
         const { rows } = await db.query(
             `SELECT id, coupon_code, discount_type, discount_value
              FROM Offers
@@ -73,7 +75,21 @@ const validateCoupon = async (req, res) => {
             return res.status(404).json({ error: 'Coupon is invalid or has expired' });
         }
 
-        return res.status(200).json({ valid: true, offer: rows[0] });
+        const offer = rows[0];
+
+        // Step 2: Check if already used
+        const usageCheck = await db.query(
+            `SELECT 1 FROM CouponUsage
+             WHERE user_id = $1 AND offer_id = $2`,
+            [userId, offer.id]
+        );
+
+        if (usageCheck.rows.length > 0) {
+            return res.status(400).json({ error: 'You have already used this coupon' });
+        }
+
+        return res.status(200).json({ valid: true, offer });
+
     } catch (error) {
         console.error('Error validating coupon:', error);
         return res.status(500).json({ error: 'Internal server error' });
