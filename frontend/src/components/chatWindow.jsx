@@ -65,21 +65,21 @@ const ChatWindow = ({ roomType, roomId, title, onClose }) => {
     });
 
     return (
-        <div className="flex flex-col rounded-2xl overflow-hidden shadow-2xl"
-            style={{ background: '#0e1117', border: '1px solid rgba(255,255,255,0.1)', width: '360px', height: '480px' }}>
+        <div className="flex flex-col rounded-2xl overflow-hidden shadow-2xl bg-[#0e1117] border border-white/10 w-[360px] h-[480px] max-w-full">
 
             {/* Header */}
-            <div className="flex items-center justify-between px-4 py-3"
-                style={{ background: '#141a24', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
+            <div className="flex items-center justify-between px-4 py-3 bg-[#141a24] border-b border-white/8">
                 <div className="flex items-center gap-2">
                     <MessageCircle className="w-4 h-4 text-cyan-400" />
                     <div>
                         <p className="text-sm font-bold text-white leading-none">{title}</p>
-                        <p className="text-xs text-white/30 mt-0.5 capitalize">{roomType} chat</p>
+                        <p className="text-xs text-white/50 mt-0.5 capitalize">{roomType} chat</p>
                     </div>
                 </div>
                 <button onClick={onClose}
-                    className="w-7 h-7 flex items-center justify-center rounded-lg text-white/30 hover:text-white hover:bg-white/10 transition-all">
+                    className="w-7 h-7 flex items-center justify-center rounded-lg text-white/50 hover:text-white hover:bg-white/10 transition-all focus-visible:ring-2 focus-visible:ring-cyan-400"
+                    aria-label="Close Chat"
+                >
                     <X className="w-4 h-4" />
                 </button>
             </div>
@@ -88,13 +88,13 @@ const ChatWindow = ({ roomType, roomId, title, onClose }) => {
             <div className="flex-1 overflow-y-auto px-4 py-3 space-y-3">
                 {loading ? (
                     <div className="flex items-center justify-center h-full">
-                        <Loader2 className="w-6 h-6 text-white/20 animate-spin" />
+                        <Loader2 className="w-6 h-6 text-white/30 animate-spin" />
                     </div>
                 ) : messages.length === 0 ? (
                     <div className="flex flex-col items-center justify-center h-full gap-2">
-                        <MessageCircle className="w-10 h-10 text-white/10" />
-                        <p className="text-white/25 text-sm">No messages yet</p>
-                        <p className="text-white/15 text-xs">Start the conversation</p>
+                        <MessageCircle className="w-10 h-10 text-white/20" />
+                        <p className="text-white/50 text-sm">No messages yet</p>
+                        <p className="text-white/40 text-xs">Start the conversation</p>
                     </div>
                 ) : (
                     messages.map((msg) => {
@@ -102,16 +102,16 @@ const ChatWindow = ({ roomType, roomId, title, onClose }) => {
                         return (
                             <div key={msg.id} className={`flex flex-col ${isMe ? 'items-end' : 'items-start'}`}>
                                 {!isMe && (
-                                    <p className="text-xs text-white/30 mb-1 px-1">{msg.sender_name}</p>
+                                    <p className="text-xs text-white/60 mb-1 px-1">{msg.sender_name}</p>
                                 )}
-                                <div className="max-w-[80%] px-3 py-2 rounded-2xl text-sm"
-                                    style={isMe
-                                        ? { background: '#22d3ee', color: '#000', borderBottomRightRadius: '4px' }
-                                        : { background: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.85)', borderBottomLeftRadius: '4px' }
-                                    }>
+                                <div className={`max-w-[80%] px-3 py-2 rounded-2xl text-sm ${
+                                    isMe
+                                        ? 'bg-[#22d3ee] text-black rounded-br-sm'
+                                        : 'bg-white/8 text-white/90 rounded-bl-sm'
+                                }`}>
                                     {msg.message}
                                 </div>
-                                <p className="text-xs text-white/20 mt-1 px-1">{formatTime(msg.created_at)}</p>
+                                <p className="text-xs text-white/40 mt-1 px-1">{formatTime(msg.created_at)}</p>
                             </div>
                         );
                     })
@@ -120,19 +120,20 @@ const ChatWindow = ({ roomType, roomId, title, onClose }) => {
             </div>
 
             {/* Input */}
-            <div className="px-3 py-3" style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }}>
+            <div className="px-3 py-3 border-t border-white/8">
                 <div className="flex items-center gap-2">
                     <input
                         value={input}
                         onChange={e => setInput(e.target.value)}
                         onKeyDown={handleKey}
                         placeholder="Type a message..."
-                        className="flex-1 px-3 py-2 rounded-xl text-sm text-white outline-none placeholder:text-white/20"
-                        style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)' }}
+                        className="flex-1 px-3 py-2 rounded-xl text-sm text-white outline-none placeholder:text-white/40 bg-white/5 border border-white/10 focus:border-cyan-400/50 focus:ring-1 focus:ring-cyan-400/30 transition-all"
+                        aria-label="Message text"
                     />
                     <button onClick={handleSend} disabled={!input.trim()}
-                        className="w-9 h-9 flex items-center justify-center rounded-xl transition-all disabled:opacity-30 active:scale-95"
-                        style={{ background: '#22d3ee' }}>
+                        className="w-9 h-9 flex items-center justify-center rounded-xl transition-all disabled:opacity-30 active:scale-95 bg-[#22d3ee] hover:bg-cyan-300 focus-visible:ring-2 focus-visible:ring-cyan-400"
+                        aria-label="Send message"
+                    >
                         <Send className="w-4 h-4 text-black" />
                     </button>
                 </div>

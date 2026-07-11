@@ -73,10 +73,11 @@ const Navbar = () => {
                                         </NavLink>
                                         <Link
                                             to="/cart"
-                                            className={`relative p-2.5 rounded-lg transition-all duration-150 ${isActive('/cart')
+                                            className={`relative p-2.5 rounded-lg transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 ${isActive('/cart')
                                                 ? 'text-cyan-400 bg-cyan-500/10'
-                                                : 'text-white/50 hover:text-cyan-400 hover:bg-white/5'
+                                                : 'text-white/60 hover:text-cyan-400 hover:bg-white/5'
                                                 }`}
+                                            aria-label={`View Cart, ${cartCount} items`}
                                         >
                                             <ShoppingCart className="w-5 h-5" />
                                             {cartCount > 0 && (
@@ -96,13 +97,14 @@ const Navbar = () => {
                                 {/* User pill */}
                                 <div className="flex items-center gap-3 ml-3 pl-3 border-l border-white/10">
                                     <div className="text-right">
-                                        <p className="text-xs font-semibold text-white/80 leading-none">{user.full_name}</p>
-                                        <p className="text-[10px] text-cyan-400/70 mt-0.5 font-mono">{user.role_name}</p>
+                                        <p className="text-xs font-semibold text-white/90 leading-none">{user.full_name}</p>
+                                        <p className="text-[10px] text-cyan-400/80 mt-0.5 font-mono">{user.role_name}</p>
                                     </div>
                                     <button
                                         onClick={handleLogout}
-                                        className="p-2 rounded-lg text-white/30 hover:text-red-400 hover:bg-red-500/10 transition-all duration-150"
+                                        className="p-2 rounded-lg text-white/50 hover:text-red-400 hover:bg-red-500/10 transition-all duration-150"
                                         title="Logout"
+                                        aria-label="Logout"
                                     >
                                         <LogOut className="w-4 h-4" />
                                     </button>
@@ -128,8 +130,10 @@ const Navbar = () => {
 
                     {/* Mobile toggle */}
                     <button
-                        className="md:hidden p-2 rounded-lg text-white/50 hover:text-white hover:bg-white/5"
+                        className="md:hidden p-2 rounded-lg text-white/65 hover:text-white hover:bg-white/5"
                         onClick={() => setMobileOpen(o => !o)}
+                        aria-label={mobileOpen ? "Close menu" : "Open menu"}
+                        aria-expanded={mobileOpen}
                     >
                         {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
                     </button>
@@ -147,7 +151,7 @@ const Navbar = () => {
                                 </div>
                                 <div>
                                     <p className="text-sm font-semibold text-white">{user.full_name}</p>
-                                    <p className="text-xs text-cyan-400/70 font-mono">{user.role_name}</p>
+                                    <p className="text-xs text-cyan-400/80 font-mono">{user.role_name}</p>
                                 </div>
                             </div>
                             <MobileNavLink to={getDashboardLink()}>Dashboard</MobileNavLink>
@@ -183,7 +187,7 @@ const NavLink = ({ to, active, children }) => (
         to={to}
         className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-150 ${active
             ? 'text-cyan-400 bg-cyan-500/10'
-            : 'text-white/50 hover:text-white/90 hover:bg-white/5'
+            : 'text-white/60 hover:text-white/95 hover:bg-white/5'
             }`}
     >
         {children}

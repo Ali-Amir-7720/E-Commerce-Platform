@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Image, X, Upload } from 'lucide-react';
+import { X, Upload } from 'lucide-react';
 
 // Converts file to base64 string
 const toBase64 = (file) => new Promise((resolve, reject) => {
@@ -27,12 +27,14 @@ const ImageUpload = ({ value, onChange, label = 'Product Image' }) => {
 
     return (
         <div>
-            <label className="block text-xs font-bold text-white/40 uppercase tracking-wider mb-2">{label}</label>
+            <label className="block text-xs font-bold text-white/60 uppercase tracking-wider mb-2">{label}</label>
             {value ? (
                 <div className="relative rounded-xl overflow-hidden border border-white/10 group">
                     <img src={value} alt="Product" className="w-full h-40 object-cover" />
                     <button type="button" onClick={() => onChange(null)}
-                        className="absolute top-2 right-2 w-7 h-7 flex items-center justify-center bg-black/60 hover:bg-red-500 rounded-lg transition-colors opacity-0 group-hover:opacity-100">
+                        className="absolute top-2 right-2 w-7 h-7 flex items-center justify-center bg-black/60 hover:bg-red-500 rounded-lg transition-colors opacity-50 hover:opacity-100 focus-visible:opacity-100 focus-visible:ring-2 focus-visible:ring-cyan-400 group-hover:opacity-100"
+                        aria-label="Remove image"
+                    >
                         <X className="w-3.5 h-3.5 text-white" />
                     </button>
                 </div>
@@ -41,10 +43,14 @@ const ImageUpload = ({ value, onChange, label = 'Product Image' }) => {
                     onDrop={handleDrop}
                     onDragOver={e => e.preventDefault()}
                     onClick={() => inputRef.current.click()}
-                    className="border-2 border-dashed border-white/10 hover:border-cyan-500/40 rounded-xl p-6 text-center cursor-pointer transition-all hover:bg-cyan-500/5">
-                    <Upload className="w-8 h-8 mx-auto mb-2 text-white/20" />
-                    <p className="text-sm text-white/30 font-semibold">Click or drag image here</p>
-                    <p className="text-xs text-white/15 mt-1">PNG, JPG up to 2MB</p>
+                    onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); inputRef.current.click(); } }}
+                    tabIndex={0}
+                    role="button"
+                    aria-label={`Upload image for ${label}`}
+                    className="border-2 border-dashed border-white/10 hover:border-cyan-500/40 rounded-xl p-6 text-center cursor-pointer transition-all hover:bg-cyan-500/5 focus-visible:border-cyan-500/50 outline-none">
+                    <Upload className="w-8 h-8 mx-auto mb-2 text-white/40" />
+                    <p className="text-sm text-white/60 font-semibold">Click or drag image here</p>
+                    <p className="text-xs text-white/40 mt-1">PNG, JPG up to 2MB</p>
                 </div>
             )}
             <input ref={inputRef} type="file" accept="image/*" className="hidden"

@@ -24,32 +24,35 @@ const VendorChat = () => {
 
     return (
         <div className="mt-8">
-            <h3 className="text-sm font-black text-white/50 uppercase tracking-widest mb-4 flex items-center gap-2">
+            <h3 className="text-sm font-black text-white/70 uppercase tracking-widest mb-4 flex items-center gap-2">
                 <MessageCircle className="w-4 h-4" /> Customer Inquiries
             </h3>
 
             {loading ? (
-                <p className="text-white/20 text-sm">Loading conversations...</p>
+                <p className="text-white/50 text-sm">Loading conversations...</p>
             ) : conversations.length === 0 ? (
-                <div className="py-10 text-center rounded-2xl" style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)' }}>
-                    <MessageCircle className="w-8 h-8 mx-auto mb-2 text-white/10" />
-                    <p className="text-white/25 text-sm">No customer inquiries yet</p>
+                <div className="flex flex-col items-center justify-center py-16 text-center rounded-2xl bg-white/[0.02] border border-white/5">
+                    <div className="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mb-4">
+                        <MessageCircle className="text-white/40" size={28} />
+                    </div>
+                    <h4 className="text-base font-semibold text-white mb-1">No inquiries yet</h4>
+                    <p className="text-white/50 text-sm max-w-xs">
+                        When customers ask about your products, their messages will show up here.
+                    </p>
                 </div>
             ) : (
                 <div className="space-y-2">
                     {conversations.map((conv, i) => (
                         <button key={i} onClick={() => setActiveChat(conv)}
-                            className="w-full flex items-center gap-3 p-4 rounded-2xl text-left transition-all hover:bg-white/5"
-                            style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>
-                            <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
-                                style={{ background: 'rgba(34,211,238,0.1)' }}>
+                            className="w-full flex items-center gap-3 p-4 rounded-2xl text-left transition-all bg-white/[0.03] border border-white/8 hover:border-cyan-400/30 hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400">
+                            <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 bg-cyan-500/10">
                                 <MessageCircle className="w-4 h-4 text-cyan-400" />
                             </div>
                             <div className="flex-1 min-w-0">
-                                <p className="text-sm font-semibold text-white/80 truncate">{conv.other_name}</p>
-                                <p className="text-xs text-white/30 truncate">{conv.last_message}</p>
+                                <p className="text-sm font-semibold text-white/90 truncate">{conv.other_name}</p>
+                                <p className="text-xs text-white/50 truncate">{conv.last_message}</p>
                             </div>
-                            <ChevronRight className="w-4 h-4 text-white/20 shrink-0" />
+                            <ChevronRight className="w-4 h-4 text-white/40 shrink-0" />
                         </button>
                     ))}
                 </div>

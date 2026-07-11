@@ -58,6 +58,18 @@
     -webkit-text-fill-color: rgba(255, 255, 255, 0.85) !important;
     caret-color: rgba(255, 255, 255, 0.85);
   }
+
+  /* Global Keyboard Focus States */
+  button:focus-visible,
+  a:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible,
+  [role="button"]:focus-visible,
+  label[id="image-upload"]:focus-visible {
+    outline: 2px solid #22d3ee;
+    outline-offset: 2px;
+  }
 }
 
 @keyframes toastIn {
@@ -96,16 +108,23 @@
 
 @keyframes shimmer {
   0% {
-    background-position: -400px 0;
+    background-position: -1000px 0;
   }
 
   100% {
-    background-position: 400px 0;
+    background-position: 1000px 0;
   }
 }
 
 .animate-fade-up {
   animation: fadeUp 0.4s ease-out forwards;
+}
+
+/* Shimmer / Skeleton Helpers */
+.skeleton {
+  animation: shimmer 2s infinite linear;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0.03) 8%, rgba(255, 255, 255, 0.08) 18%, rgba(255, 255, 255, 0.03) 33%);
+  background-size: 1000px 100%;
 }
 
 .stagger-1 {
